@@ -10,21 +10,34 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
+            'Admin\Controller\User' => 'Admin\Controller\UserController',
         ),
     ),
     'router' => array(
         'routes' => array(
             'admin' => array(
-                'type'    => 'segment',
+                'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/admin[/][:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
+                    'route'    => '/admin',
                     'defaults' => array(
-                        'controller' => 'Admin\Controller\Index',
-                        'action'     => 'index',
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -37,9 +50,9 @@ return array(
         ),
         'template_map' => array(
             'admin/index/index' => __DIR__ .  '/../view/admin/index/index.phtml',
-            'layout/layout'             => __DIR__ . '/../view/layout/layout.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
+            //'layout/layout'             => __DIR__ . '/../view/layout/layout.phtml',
+            //'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            //'error/404'               => __DIR__ . '/../view/error/404.phtml',
         ),
     ),
 );
