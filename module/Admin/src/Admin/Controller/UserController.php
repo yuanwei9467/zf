@@ -20,9 +20,10 @@ class UserController extends AbstractActionController{
      */
 
     public function indexAction(){
-        $adapter = \Zend\Db\TableGateway\Feature\GlobalAdapterFeature::getStaticAdapter();
+        $sm = $this->getServiceLocator();
+        $adapter = $sm->get('Zend\Db\Adapter\Adapter');
         $userTable = new \Admin\Model\User('users',$adapter);
-        $rowSet = $userTable->select(where(array('id'=>1)));
-        print_r($rowSet);
+        $rowSet = $userTable->select(array('id'=>1));
+        //print_r($rowSet);
     }
 }
