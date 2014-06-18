@@ -8,6 +8,7 @@
 
 namespace Admin\Model;
 
-class User extends \Zend\Db\TableGateway\TableGateway{
+class User{
+
 
 }
