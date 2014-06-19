@@ -1,12 +1,28 @@
+
 <div class="row">
+
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <?php
+            if(isset($errors) && is_array($errors)){
+        ?>
+        <div class="alert alert-danger fade in">
+            <?php
+                foreach($errors as $k=>$v){
+                    foreach($v as $k1=>$v1){
+                        echo "<p>$k  $v1</p>";
+                    }
+
+                }
+            ?>
+        </div>
+        <?php }?>
         <form class="reg-page" action="<?php echo $this->url('application',array('controller'=>'user','action'=>'reg'));?>" method="post">
             <div class="reg-header">
                 <h2>Register a new account</h2>
                 <p>Already Signed Up? Click <a href="page_login.html" class="color-green">Sign In</a> to login your account.</p>
             </div>
 
-            <label>First Name<span class="color-red">*</span></label>
+            <label>Username<span class="color-red">*</span></label>
             <input type="text" class="form-control margin-bottom-20" name="username">
 
 

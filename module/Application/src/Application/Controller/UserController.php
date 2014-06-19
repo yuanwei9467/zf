@@ -19,9 +19,15 @@ class UserController extends \Zend\Mvc\Controller\AbstractActionController{
             $table = new \Application\Model\User('users',$this->getAdapter());
 
             $data = $data->toArray();
-            $data['password'] = new \Application\Common\Password($data['password'])
-            unset($data['repassword']);
-            $table->insert($data);
+            if($table->validations($data)){
+                $data['password'] = new \Application\Common\Password($data['password']);
+                unset($data['repassword']);
+                $table->insert($data);
+                $this->redirect();
+            }else{
+                return new ViewModel(array('errors'=>$table->getErrorMsg()));
+            }
+
 
         }else{
             return new ViewModel();
@@ -37,5 +43,14 @@ class UserController extends \Zend\Mvc\Controller\AbstractActionController{
         $this->adapter = $sm->get('Zend\Db\Adapter\Adapter');
         return $this->adapter;
 
+    }
+
+    public function loginAction(){
+        if($this->getRequest()->getPost()){
+            $data = $this->getRequest()->getPost();
+
+
+        }
+        return new ViewModel();
     }
 }
